@@ -90,10 +90,10 @@ class ViewController: UIViewController {
             applicationParameter[0] = 0xFF
         }
         if useInvalidKeyHandle {
-            var data = NSData(data: originalKeyHandle as Data) as Data
-            data.replaceSubrange(0..<2, with: [0xFF, 0xFF] as [UInt8], count: 2)
-            data.replaceSubrange(data.count - 1..<1, with: [0xFF] as [UInt8], count: 1)
-            keyHandleData = data
+            let data = NSMutableData(data: originalKeyHandle)
+            data.replaceBytes(in: NSMakeRange(0, 2), withBytes: [0xFF, 0xFF] as [UInt8], length: 2)
+            data.replaceBytes(in: NSMakeRange(data.length - 1, 1), withBytes: [0xFF] as [UInt8], length: 1)
+            keyHandleData = data as Data
         }
         else {
             keyHandleData = originalKeyHandle as Data
